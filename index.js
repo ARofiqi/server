@@ -1,12 +1,20 @@
-const bodyParser = require("body-parser");
-const express = require("express");
-const mahasiswaController = require("./controllers/mahasiswaControllers");
+const { response } = require("express");
 
-const app = express();
-const PORT = 3000;
+const mahasiswaNIM = "1102020";
+const updateData = {
+  nama: "Ronaldo",
+  gender: "L",
+  prodi: "TE",
+  alamat: "JL. Cibolang Kaler",
+};
 
-app.use("/mahasiswa", mahasiswaController);
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+fetch(`http://localhost:3000/mahasiswa/${mahasiswaNIM}`, {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(updateData),
+})
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((err) => console.error("error : ", err));
