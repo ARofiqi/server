@@ -1,11 +1,12 @@
 const { response } = require("express");
 
-const mahasiswaNIM = "1102020";
+const mahasiswaNIM = "1010101";
 const updateData = {
+  nim: mahasiswaNIM,
   nama: "Ronaldo",
   gender: "L",
   prodi: "TE",
-  alamat: "JL. Cibolang Kaler",
+  alamat: "Cibolang",
 };
 
 fetch(`http://localhost:3000/mahasiswa/${mahasiswaNIM}`, {

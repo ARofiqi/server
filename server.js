@@ -5,6 +5,7 @@ const mahasiswaController = require("./controllers/mahasiswaControllers");
 const app = express();
 const PORT = 3000;
 
+app.use(bodyParser.json());
 app.use("/mahasiswa", mahasiswaController);
 
 app.listen(PORT, () => {

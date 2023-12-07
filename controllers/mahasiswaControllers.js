@@ -6,7 +6,7 @@ const { error } = require("console");
 const tableName = "mahasiswa";
 
 router.get("/", (req, res) => {
-  db.query(`SELECT * FROM ${tableName}`, (error, result) => {
+  db.query(`SELECT * FROM mahasiswa`, (error, result) => {
     if (error) {
       console.error("Error fetching mahasiswa : ", error);
       res.status(500).json({ massage: "Internal Server Error" });
@@ -44,21 +44,26 @@ router.put("/:nim", (req, res) => {
 });
 
 router.post("/:nim", (req, res) => {
-  const mahasiswaNIM = req.params.nim;
+  const nim = req.params.nim;
   const { nama, gender, prodi, alamat } = req.body;
-  const data = {
-    nama: nama,
-    nim: mahasiswaNIM,
-    gender: gender,
-    prodi: prodi,
-    alamat: alamat,
-  };
-  db.query(`INSERT INTO ${tableName} SET nama = ?, gender = ?, prodi = ?, alamat = ? WHERE nim = ?`, [nama, gender, prodi, alamat, mahasiswaNIM], (error) => {
+  db.query(`INSERT INTO ${tableName} (nim, nama, gender, prodi, alamat) VALUES (?, ?, ?, ?, ?)`, [nim, nama, gender, prodi, alamat], (error) => {
     if (error) {
-      console.error("Error updating mahasiswa : ", error);
+      console.error("Error adding mahasiswa : ", error);
       res.status(500).json({ massage: "Internal Server Error" });
     } else {
-      res.json({ massage: "Updatin mahasiswa successfullys" });
+      res.json({ massage: "Adding mahasiswa successfullys" });
+    }
+  });
+});
+
+router.delete("/:nim", (req, res) => {
+  const nim = req.params.nim;
+  db.query(`DELETE FROM ${tableName} WHERE nim = ?`, [nim], (error) => {
+    if (error) {
+      console.error("Error deleting mahasiswa : ", error);
+      res.status(500).json({ massage: "Internal Server Error" });
+    } else {
+      res.json({ massage: "Deleting mahasiswa successfullys" });
     }
   });
 });
